@@ -1,0 +1,238 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0e0e11; --bg2: #161619; --bg3: #1e1e23;
+    --text: #f0f0f2; --muted: #8888a0; --accent: #7f77dd; --accent2: #534ab7;
+    --border: rgba(255,255,255,0.07);
+  }
+  .site { background: var(--bg); color: var(--text); min-height: 100vh; font-family: var(--font-sans); }
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(14,14,17,0.88); backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-logo { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .nav-links a:hover { color: var(--text); }
+  section { padding: 5rem 2rem; max-width: 880px; margin: 0 auto; }
+  .hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; padding-top: 3rem; }
+  .hero-eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  .hero-name { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 500; line-height: 1.08; margin-bottom: 0.6rem; }
+  .hero-name span { color: var(--accent); }
+  .hero-role { font-size: 1.1rem; color: var(--muted); font-weight: 400; margin-bottom: 1.4rem; }
+  .hero-sub { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem; }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #fff; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 0.5px solid var(--border); padding: 10px 24px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .section-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; }
+  .divider { border: none; border-top: 0.5px solid var(--border); }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start; }
+  .about-text p { font-size: 15px; color: var(--muted); line-height: 1.85; margin-bottom: 1rem; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .objective-box { background: var(--bg3); border-left: 2px solid var(--accent); border-radius: 0 8px 8px 0; padding: 1.2rem 1.4rem; margin-top: 0.5rem; }
+  .objective-box p { font-size: 14px; color: var(--muted); line-height: 1.8; margin: 0; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+  .stat-num { font-size: 1.8rem; font-weight: 500; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+  /* Skills */
+  .skills-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .skill-group-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 1rem; }
+  .skill-tag-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { font-size: 12px; background: var(--bg3); color: var(--muted); border: 0.5px solid var(--border); border-radius: 5px; padding: 5px 10px; }
+  .skill-tag.accent { border-color: rgba(127,119,221,0.35); color: #a9a3e8; }
+
+  /* Tools */
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .tool-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
+  .tool-icon { font-size: 13px; font-weight: 500; color: var(--accent); margin-bottom: 6px; }
+  .tool-name { font-size: 13px; color: var(--text); font-weight: 500; }
+  .tool-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+
+  /* Experience */
+  .exp-list { display: flex; flex-direction: column; gap: 10px; }
+  .exp-item { display: flex; gap: 12px; align-items: flex-start; }
+  .exp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+  .exp-text { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* Strengths */
+  .strengths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .strength-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
+  .strength-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .strength-desc { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+  /* Contact */
+  .contact-box { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 12px; padding: 2.5rem; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .contact-field label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 6px; }
+  .contact-field.full { grid-column: 1 / -1; }
+  .contact-field input, .contact-field textarea { width: 100%; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 6px; padding: 10px 12px; color: var(--text); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.2s; }
+  .contact-field input:focus, .contact-field textarea:focus { border-color: var(--accent); }
+  .contact-field textarea { resize: vertical; min-height: 100px; }
+  .social-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; margin-right: 1.2rem; }
+  .social-link:hover { color: var(--accent); }
+  footer { text-align: center; padding: 2rem; border-top: 0.5px solid var(--border); }
+  footer p { font-size: 12px; color: var(--muted); }
+  @media (max-width: 620px) {
+    .about-grid, .skills-cols, .contact-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 1rem; }
+    section { padding: 3rem 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+
+<div class="site">
+  <nav>
+    <div class="nav-logo">Arif Hussain</div>
+    <ul class="nav-links">
+      <li><a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a></li>
+      <li><a onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</a></li>
+      <li><a onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</a></li>
+      <li><a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">Open to new opportunities</div>
+    <div class="hero-name">Hi, I'm <span>Arif Hussain</span></div>
+    <div class="hero-role">SAP MM Consultant — Sourcing and Procurement Specialist</div>
+    <p class="hero-sub">Results-driven SAP MM Consultant with hands-on experience in procurement processes, inventory management, and real-time issue resolution. Strong command of the end-to-end P2P cycle and SAP S/4HANA environments.</p>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">View experience</button>
+      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+    </div>
+  </section>
+
+  <hr class="divider" style="max-width:880px;margin:0 auto;">
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-label">About me</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <strong>Arif Hussain</strong>, an SAP MM Consultant specializing in procurement and inventory management within SAP S/4HANA environments. I have practical expertise in handling support tickets, troubleshooting system issues, and ensuring smooth business operations.</p>
+        <p>I possess working knowledge of <strong>SAP Fiori applications</strong> and integration touchpoints with Production Planning (PP) and Finance (FI) modules — bridging the gap between technical systems and real business needs.</p>
+        <div class="objective-box">
+          <p>My goal is to leverage my SAP MM expertise to contribute to business process optimization, enhance system efficiency, and grow into a senior functional consultant with strong cross-module integration knowledge.</p>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num">P2P</div><div class="stat-label">End-to-end cycle expertise</div></div>
+        <div class="stat-card"><div class="stat-num">L1/L2</div><div class="stat-label">Support ticket handling</div></div>
+        <div class="stat-card"><div class="stat-num">S/4HANA</div><div class="stat-label">SAP platform experience</div></div>
+        <div class="stat-card"><div class="stat-num">MM+FI+PP</div><div class="stat-label">Cross-module integration</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="section-label">Key skills</div>
+    <div class="skills-cols">
+      <div>
+        <div class="skill-group-title">Procurement & Inventory</div>
+        <div class="skill-tag-wrap">
+          <span class="skill-tag accent">Procure-to-Pay (P2P)</span>
+          <span class="skill-tag accent">Purchase Requisition (PR)</span>
+          <span class="skill-tag accent">Purchase Order (PO)</span>
+          <span class="skill-tag accent">Goods Receipt (GR)</span>
+          <span class="skill-tag accent">Goods Issue (GI)</span>
+          <span class="skill-tag accent">Invoice Verification (MIRO)</span>
+          <span class="skill-tag accent">Open PO Monitoring</span>
+          <span class="skill-tag accent">Stock Overview & Inventory Control</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title">Master Data & Configuration</div>
+        <div class="skill-tag-wrap">
+          <span class="skill-tag accent">Vendor Master</span>
+          <span class="skill-tag accent">Material Master</span>
+          <span class="skill-tag accent">Purchase Info Record</span>
+          <span class="skill-tag accent">Source List</span>
+          <span class="skill-tag accent">Movement Types (101, 261, 262…)</span>
+          <span class="skill-tag accent">Basic SPRO Configuration</span>
+          <span class="skill-tag accent">SAP Fiori Navigation</span>
+          <span class="skill-tag accent">Root Cause Analysis (RCA)</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem;">
+      <div class="skill-group-title" style="margin-bottom:1rem;">Tools & technologies</div>
+      <div class="tools-grid">
+        <div class="tool-card"><div class="tool-icon">SAP</div><div class="tool-name">SAP S/4HANA</div><div class="tool-desc">MM Module — core platform</div></div>
+        <div class="tool-card"><div class="tool-icon">GUI</div><div class="tool-name">SAP GUI</div><div class="tool-desc">ME2N, ME23N, MIGO, MIRO, MMBE</div></div>
+        <div class="tool-card"><div class="tool-icon">APP</div><div class="tool-name">SAP Fiori</div><div class="tool-desc">Modern UX applications</div></div>
+        <div class="tool-card"><div class="tool-icon">CFG</div><div class="tool-name">SPRO</div><div class="tool-desc">Basic configuration knowledge</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="section-label">Professional experience</div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:1.8rem 2rem;margin-bottom:2rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;">
+        <div>
+          <div style="font-size:16px;font-weight:500;color:var(--text);">SAP MM Consultant</div>
+          <div style="font-size:13px;color:var(--accent);margin-top:3px;">Support & Operations</div>
+        </div>
+        <span style="font-size:12px;background:var(--bg3);color:var(--muted);border:0.5px solid var(--border);border-radius:4px;padding:4px 10px;">SAP S/4HANA</span>
+      </div>
+      <div class="exp-list">
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Managed and resolved day-to-day SAP MM support tickets including procurement, inventory, and invoice-related issues.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Monitored and analyzed Open Purchase Orders using SAP GUI (ME2N, ME23N) and Fiori apps.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Performed GR and GI transactions and resolved related errors such as stock deficits and movement issues.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Handled Invoice Verification (MIRO) issues including blocked invoices, price/quantity mismatches, and GR-based verification.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Maintained and validated master data including Material Master, Vendor Master, Purchase Info Records, and Source Lists.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Assisted in troubleshooting integration issues between MM and PP (MRP, Production Orders) and MM and FI (account determination).</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Conducted stock analysis using MMBE and resolved discrepancies related to storage locations and stock types.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Supported users with authorization issues in coordination with the BASIS team.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Participated in testing and validation during system changes and enhancements.</div></div>
+        <div class="exp-item"><div class="exp-dot"></div><div class="exp-text">Communicated with business users to understand requirements and deliver effective solutions.</div></div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:3rem;">Strengths</div>
+    <div class="strengths-grid">
+      <div class="strength-card"><div class="strength-title">Analytical thinking</div><div class="strength-desc">Strong problem-solving skills applied to real-time SAP issues.</div></div>
+      <div class="strength-card"><div class="strength-title">Quick learner</div><div class="strength-desc">Practical approach to picking up new modules and integrations fast.</div></div>
+      <div class="strength-card"><div class="strength-title">Independent delivery</div><div class="strength-desc">Able to own and close support tickets end-to-end without hand-holding.</div></div>
+      <div class="strength-card"><div class="strength-title">Business understanding</div><div class="strength-desc">Deep grasp of real-world procurement and inventory scenarios.</div></div>
+      <div class="strength-card"><div class="strength-title">Clear communication</div><div class="strength-desc">Effective with both end-users and technical/business stakeholders.</div></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-box">
+      <p style="font-size:18px;font-weight:500;color:var(--text);margin-bottom:4px;">Let's connect</p>
+      <p style="font-size:14px;color:var(--muted);">Interested in working together or have an SAP MM opportunity? I'd love to hear from you.</p>
+      <div class="contact-grid">
+        <div class="contact-field"><label>Name</label><input type="text" placeholder="Your name" /></div>
+        <div class="contact-field"><label>Email</label><input type="email" placeholder="you@company.com" /></div>
+        <div class="contact-field full"><label>Message</label><textarea placeholder="Tell me about the role or project..."></textarea></div>
+      </div>
+      <div style="margin-top:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <a class="social-link" href="#">LinkedIn</a>
+          <a class="social-link" href="#">GitHub</a>
+          <a class="social-link" href="#">Email</a>
+        </div>
+        <button class="btn-primary">Send message</button>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>Arif Hussain — SAP MM Consultant — 2026</p></footer>
+</div>
